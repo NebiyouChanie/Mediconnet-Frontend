@@ -135,7 +135,7 @@ const StaffManagement = () => {
                         <Card key={member._id} className="hover:shadow-md transition-shadow">
                           <CardHeader className="flex flex-row items-center gap-4 pb-2">
                             <Avatar>
-                              <AvatarImage src={member.profileImage} />
+                              <AvatarImage src={member.profilePhoto} />
                               <AvatarFallback>
                                 {member.firstName.charAt(0)}
                                 {member.lastName.charAt(0)}

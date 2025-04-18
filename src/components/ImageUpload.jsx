@@ -58,6 +58,7 @@ const ImageUpload = ({ onChange, value }) => {
       }
 
       const result = await response.json();
+      console.log("🚀 ~ handleUpload ~ result:", result.secure_url)
       onChange(result.secure_url);
     } catch (error) {
       console.error("Error uploading image:", error);

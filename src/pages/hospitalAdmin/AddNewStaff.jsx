@@ -16,6 +16,8 @@ import { z } from "zod";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BASE_URL } from "@/lib/utils";
 import { toast } from "react-toastify";
+import ImageUpload from "@/components/ImageUpload";
+
 import {
   Select,
   SelectContent,
@@ -36,6 +38,7 @@ const staffSchema = z
     lastName: z.string().min(1, "Last name is required"),
     email: z.string().email("Invalid email address"),
     password: z.string().min(8, "Password must be at least 8 characters"),
+    profilePhoto: z.string().min(1, "Profile Photo is required"),
     dateOfBirth: z.string().min(1, "Date of birth is required"),
     gender: z.enum(["Male", "Female", "Other"], {
       required_error: "Gender is required",
@@ -82,6 +85,7 @@ export default function AddStaffForm() {
       firstName: "",
       lastName: "",
       email: "",
+      profilePhoto: "",
       password: "",
       dateOfBirth: "",
       gender: "",
@@ -119,6 +123,7 @@ export default function AddStaffForm() {
         hospitalID: currentUser.hospitalId,
         ...(data.role !== "Doctor" && { specialization: undefined }),
       };
+      console.log("🚀 ~ onSubmit ~ staffData:", staffData)
 
       const response = await fetch(`${BASE_URL}/hospital-admin/add-staff`, {
         method: "POST",
@@ -276,6 +281,23 @@ export default function AddStaffForm() {
                   )}
                 />
               </div>
+
+              <FormField
+                  control={form.control}
+                  name="profilePhoto"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Profile Photo</FormLabel>
+                      <FormControl>
+                        <ImageUpload 
+                          onChange={field.onChange} 
+                          value={field.value}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
               {/* Conditional Fields */}
               {renderRoleSpecificFields()}
